@@ -619,19 +619,6 @@ fakeyt(`*Sukses No Actived!*`)
 fakeyt(`*Pilih On / Off*`)
 }
 break
-case 'group':
-case 'grup':
-if (!isGroup) return fakeyt(mess.only.group)
-if (!isGroupAdmins && !mek.key.fromMe) return fakeyt(mess.only.admin)
-if (!isBotGroupAdmins) return fakeyt(mess.only.Badmin)
-if (args[0] === 'Buka') {
-fakeyt(`*Berhasil Membuka Grup!*`)
-herman.groupSettingChange(from, GroupSettingChange.messageSend, false)
-} else if (args[0] === 'Tutup') {
-fakeyt(`*Berhasil Menutup Grup!*`)
-herman.groupSettingChange(from, GroupSettingChange.messageSend, true)
-}
-break
 case 'linkgroup':
 case 'linkgrup':
 case 'linkgc':
@@ -675,62 +662,6 @@ members_id.push(mem.jid)
 }
 mentions(teks, members_id, true)
 break
-case 'setname':
-if (!isGroup) return fakeyt(mess.only.group)
-if (!isGroupAdmins) return fakeyt(mess.only.admin)
-if (!isBotGroupAdmins) return fakeyt(mess.only.Badmin)
-herman.groupUpdateSubject(from, `${body.slice(9)}`)
-herman.sendMessage(from, `*Sukses!*`, text, { quoted: ftrol })
-break
-case 'setdesc':
-if (!isGroup) return fakeyt(mess.only.group)
-if (!isGroupAdmins) return fakeyt(mess.only.admin)
-if (!isBotGroupAdmins) return fakeyt(mess.only.Badmin)
-herman.groupUpdateDescription(from, `${body.slice(9)}`)
-herman.sendMessage(from, `*Sukses!*`, text, { quoted: ftrol })
-break
-case 'setppgrup':
-case 'setpp':
-if (!isGroup) return fakeyt(mess.only.group)
-if (!isGroupAdmins && !mek.key.fromMe) return fakeyt(mess.only.admin)
-if (!isBotGroupAdmins) return fakeyt(mess.only.Badmin)
-if (isQuotedImage) {
-let encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-let media = await herman.downloadMediaMessage(encmedia)
-herman.updateProfilePicture(from, media)
-.then((res) => fakeyt(jsonformat(res)))
-.catch((err) => fakeyt(jsonformat(err)))
-} else {
-fakeyt(`*Tag Gambar Dengan Caption ${prefix}SetPpGrup*`)
-}
-break
-case 'hidetag':
-if (!isGroup) return fakeyt(mess.only.group)
-if (!isGroupAdmins && !isOwner && !mek.key.fromMe) return fakeyt(mess.only.admin)
-try {
-quotedText = mek.message.extendedTextMessage.contextInfo.quotedMessage.conversation
-hideTag(from, `${quotedText}`)
-} catch {
-hideTag(from, `${q}`)
-}
-break
-
-// CekMenu!
-
-case 'ganteng': case 'cantik': case 'jelek': case 'goblok':  
-       case 'bego': case 'pinter': case 'jago': case 'nolep': case 'monyet':                 	 
-       case 'babi': case 'beban': case 'baik': case 'jahat': case 'anjing': 
-       case 'haram': case 'kontol': case 'pakboy': case 'pakgirl': 
-   	case 'wibu': case 'hebat': case 'sadboy': case 'sadgirl':  
-				   if (!isGroup) return reply(`GROUP ONLY`)
- 				   jds = []
-				   const A1 = groupMembers
-  		 		   const B1 = groupMembers
- 				   const C1 = A1[Math.floor(Math.random() * A1.length)]
-				   D1 = `yang *ter${command}* disini adalah @${C1.jid.split('@')[0]}`                  
-				   jds.push(C1.jid)
-				   mentions(D1, jds, true)
-				   break
 
 // Akhir!
 				
